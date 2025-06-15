@@ -1,0 +1,58 @@
+[project]
+name = "itaph"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "cvxpy>=1.6.6",
+  "highspy>=1.11.0",
+  "numpy>=2.3.0",
+  "pandas>=2.3.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+  "pre-commit>=4.2.0",
+  "pytest-cov>=6.2.1",
+  "pytest>=8.4.0",
+  "ruff>=0.11.13",
+]
+
+# Ruff
+[tool.ruff]
+exclude = [".git", "__pycache__", "build", "dist", ".venv", ".pytest_cache"]
+line-length = 88
+indent-width = 4
+target-version = "py312"
+select = ["E", "F", "UP", "I", "B", "C4", "ANN", "PL", "N", "PERF"]
+fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401", "F403"]
+"tests/**" = ["ANN", "N"]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+
+# Test
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --cov=src --cov-report=xml --cov-fail-under=85"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+pythonpath = ["src"]
+log_cli = true
+log_level = "INFO"
+
+markers = [
+  "smoke: run essential smoke tests only",
+  "integration: external systems",
+]
