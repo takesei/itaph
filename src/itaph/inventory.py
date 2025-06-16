@@ -30,7 +30,7 @@ class Inventory:
         return self.inventory.stack('item').iloc[:, 0]
 
     @property
-    def matrix(self) -> pd.Series:
+    def matrix(self) -> pd.DataFrame:
         return self.inventory
 
     def __add__(self, inventory: 'Inventory') -> 'Inventory':
