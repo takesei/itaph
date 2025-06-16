@@ -1,6 +1,8 @@
 import numpy as np
+import pandas as pd
 import pytest
 
+from itaph.decomposer import Decomposer
 from itaph.inventory import Inventory
 from itaph.operator import Operator
 from itaph.typing import Key, KeyList
@@ -117,3 +119,32 @@ class TestOperator:
                 [0, 0, 0, 0, 1],
             ]
         ).all()
+
+
+class TestOperatorSlow:
+    @pytest.fixture
+    def keys(self):
+        return KeyList(Key('A', 'x'), Key('A', 'y'), Key('B', 'x'), Key('B', 'y'))
+
+    @pytest.fixture
+    def value(self):
+        return [
+            [10, 10, 10, 10],
+            [10, 20, 30, 40],
+        ]
+
+    def test_decompose(self, keys, value):
+        c_t = pd.DataFrame(
+            np.ones((4, 4)), columns=keys.to_index(), index=keys.to_index()
+        )
+        c_p = pd.DataFrame(np.ones(4), index=keys.to_index())
+        c_s = pd.DataFrame(np.ones(4), index=keys.to_index())
+
+        dc = Decomposer(keys, c_t, c_p, c_s)
+
+        inp = Inventory(keys, value[0])
+        out = Inventory(keys, value[1])
+
+        ret = Operator.decompose(dc, inp, out)
+
+        assert ret.components is not None
