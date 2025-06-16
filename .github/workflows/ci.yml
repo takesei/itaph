@@ -2,9 +2,15 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
+
+permissions:
+  contents: write
+  checks: write
+  pull-requests: write
+
 
 jobs:
   build:
@@ -37,6 +43,7 @@ jobs:
             | tee pytest-coverage.txt
 
       - name: Pytest coverage comment
+        if: matrix.python-version == '3.12'
         uses: MishaKav/pytest-coverage-comment@main
         with:
           pytest-coverage-path: ./pytest-coverage.txt
