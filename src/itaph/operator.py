@@ -48,7 +48,6 @@ class Operator:
         return Operator(self.keys, ret)
 
     def __matmul__(self, inventory: Inventory) -> Inventory:
-        # print(self.keys.loc[(self.keys != '_affine').all(axis=0)])
         # self.keys.assert_eq(inventory.keys)
         vec = np.concatenate([inventory.vector, [1]])
         ret = self.params @ vec
