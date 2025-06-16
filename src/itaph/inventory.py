@@ -25,12 +25,20 @@ class Inventory:
         inventory = pd.DataFrame(value, index=self.keys.to_index())
         self.inventory = inventory.unstack('item')
 
+    @property
+    def vector(self) -> pd.Series:
+        return self.inventory.stack('item').iloc[:, 0]
+
+    @property
+    def matrix(self) -> pd.Series:
+        return self.inventory
+
     def __add__(self, inventory: 'Inventory') -> 'Inventory':
         self.keys.assert_eq(inventory.keys)
-        ret = self.inventory.add(inventory.inventory, fill_value=0.0)
-        return Inventory(self.keys, ret.stack('item'))
+        ret = self.vector.add(inventory.vector, fill_value=0.0)
+        return Inventory(self.keys, ret)
 
     def __sub__(self, inventory: 'Inventory') -> 'Inventory':
         self.keys.assert_eq(inventory.keys)
-        ret = self.inventory.add(-inventory.inventory, fill_value=0.0)
-        return Inventory(self.keys, ret.stack('item'))
+        ret = self.vector.add(-inventory.vector, fill_value=0.0)
+        return Inventory(self.keys, ret)

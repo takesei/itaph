@@ -15,8 +15,13 @@ class KeyList:
         self.keys = pd.DataFrame([k.__dict__ for k in keys])
         self.keys = self.keys.sort_values(list(self.keys.columns))
 
+    def copy(self) -> 'KeyList':
+        ret = KeyList()
+        ret.keys = self.keys.copy()
+        return ret
+
     def __eq__(self, key_list: 'KeyList') -> bool:
-        is_same_fields = (self.keys.columns == key_list.keys.columns).all()
+        is_same_fields = set(self.keys.columns) == set(key_list.keys.columns)
         is_same_length = len(self.keys) == len(key_list.keys)
         is_same_contents = self.keys.equals(key_list.keys)
 
@@ -33,15 +38,32 @@ class KeyList:
                 + f'{is_same_fields=}, {is_same_length=}, {is_same_contents=}'
             )
 
+    def add(self, *keys: Key) -> 'KeyList':
+        new_keys = pd.DataFrame([k.__dict__ for k in keys])
+        keys = pd.concat([self.keys, new_keys], axis=0)
+        ret = self.copy()
+        ret.keys = keys.sort_values(list(self.keys.columns))
+        return ret
+
     def to_index(self) -> pd.MultiIndex:
         return pd.MultiIndex.from_frame(self.keys)
 
     @property
     def shape(self) -> tuple[int, ...]:
-        return self.shape
+        return self.keys.shape
 
     def __len__(self) -> int:
         return len(self.keys)
+
+    def __contains__(self, key: Key) -> bool:
+        val = tuple(key.__dict__.values())
+        return self.to_index().isin([val]).any()
+
+    def isin(self, keys: list[Key] | Key) -> bool:
+        if isinstance(keys, Key):
+            keys = [keys]
+        val = [tuple(key.__dict__.values()) for key in keys]
+        return self.to_index().isin(val)
 
 
 @dataclass(frozen=True)

@@ -47,7 +47,8 @@ class TestInventory:
 
             ret = i1 + i2
 
-            assert (ret.inventory.values == e).all()
+            assert (ret.matrix.values == e).all()
+            assert (ret.vector.values == sum(e, [])).all()
             assert ret.keys == i1.keys
             assert ret.keys == i2.keys
 
@@ -57,7 +58,8 @@ class TestInventory:
 
             ret = i1 - i2
 
-            assert (ret.inventory.values == e).all()
+            assert (ret.matrix.values == e).all()
+            assert (ret.vector.values == sum(e, [])).all()
             assert ret.keys == i1.keys
             assert ret.keys == i2.keys
 

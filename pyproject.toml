@@ -29,8 +29,10 @@ exclude = [".git", "__pycache__", "build", "dist", ".venv", ".pytest_cache"]
 line-length = 88
 indent-width = 4
 target-version = "py312"
-select = ["E", "F", "UP", "I", "B", "C4", "ANN", "PL", "N", "PERF"]
+
+[tool.ruff.lint]
 fixable = ["ALL"]
+select = ["E", "F", "UP", "I", "B", "C4", "ANN", "PL", "N", "PERF"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["E402", "F401", "F403"]
