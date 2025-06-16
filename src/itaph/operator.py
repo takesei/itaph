@@ -42,9 +42,9 @@ class Operator:
         )
         self.components = components
 
-    def __mul__(self, operator: 'Operator') -> 'Operator':
-        self.keys.assert_eq(operator.keys)
-        ret = self.params @ operator.params
+    def __mul__(self, rhs: 'Operator') -> 'Operator':
+        self.keys.assert_eq(rhs.keys)
+        ret = self.params @ rhs.params
         return Operator(self.keys, ret)
 
     def __matmul__(self, inventory: Inventory) -> Inventory:

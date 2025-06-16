@@ -37,14 +37,14 @@ class Decomposer:
             self.c_p = np.asarray(cost_prod.loc[self.keys.to_index()]).flatten()
             self.c_s = np.asarray(cost_stre.loc[self.keys.to_index()]).flatten()
         except KeyError as e:
+            cond_tran = cost_tran.index[~cost_tran.index.isin(self.keys.to_index())]
+            cond_prod = cost_prod.index[~cost_prod.index.isin(self.keys.to_index())]
+            cond_stre = cost_stre.index[~cost_stre.index.isin(self.keys.to_index())]
             raise KeyError(
                 'Arg <keys> must be used in all dataframes, '
-                + 'cost_tran: '
-                + f'{cost_tran.index[~cost_tran.index.isin(self.keys.to_index())]}'  # noqa: E501
-                + 'cost_prod: '
-                + f'{cost_prod.index[~cost_prod.index.isin(self.keys.to_index())]}'
-                + 'cost_stre: '
-                + f'{cost_stre.index[~cost_stre.index.isin(self.keys.to_index())]}'
+                + f'cost_tran: {cond_tran}'
+                + f'cost_prod: {cond_prod}'
+                + f'cost_stre: {cond_stre}'
             ) from e
 
     def decompose(

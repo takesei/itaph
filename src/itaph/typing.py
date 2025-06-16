@@ -59,7 +59,7 @@ class KeyList:
         val = tuple(key.__dict__.values())
         return self.to_index().isin([val]).any()
 
-    def isin(self, keys: list[Key] | Key) -> bool:
+    def isin(self, keys: list[Key] | Key) -> pd.Series:
         if isinstance(keys, Key):
             keys = [keys]
         val = [tuple(key.__dict__.values()) for key in keys]
@@ -93,5 +93,5 @@ class ProblemVariables:
             + f'({self.sl_p.value} + {self.sl_n.value})'
         )
 
-    def print(self) -> None:
+    def display(self) -> None:
         print(self.format())
