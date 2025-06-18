@@ -35,7 +35,7 @@ Where:
 | $P \geq 0$                                                                            | Non-negativity of production plan         |
 | $P \leq L_p$                                                                          | Production capacity limits                |
 | $R + I \geq 0$                                                                        | No negative inventory levels              |
-| $R \leq L_r$                                                                          | Inventory upper bounds                    |
+| $R + I \leq L_r$                                                                      | Inventory upper bounds                    |
 | $D \geq 0$                                                                            | Non-negativity of shortage slack          |
 | $O \geq 0$                                                                            | Non-negativity of overflow slack          |
 
