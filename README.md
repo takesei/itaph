@@ -30,7 +30,7 @@ Where:
 | ------------------------------------------------------------------------------------- | ----------------------------------------- |
 | $I^{[w]} + T^{[w]}(P^{[w]} + R^{[w-1]}) = I^{[w+1]} + R^{[w]} + (O^{[w]} - D^{[w]})$  | Flow balance for each $w \in \text{Week}$ |
 | $T \geq 0$                                                                            | Non-negativity of transport plan          |
-| $\text{Sum}(T, \text{axis} = [0, 1]) = 1$                                             | Total transport flow conservation         |
+| $\text{Sum}(T, \text{axis} = [0, 1, 4]) = 1$                                          | Total transport flow conservation         |
 | $T \leq L_t$                                                                          | Transport capacity limits                 |
 | $P \geq 0$                                                                            | Non-negativity of production plan         |
 | $P \leq L_p$                                                                          | Production capacity limits                |
@@ -43,26 +43,26 @@ Where:
 
 ### Variables
 
-| Description                   | Name | Shape                                                                                               |
-| ----------------------------- | ---- | --------------------------------------------------------------------------------------------------- |
-| Transportation Plan           | $T$  | $(\text{item} \times \text{storage}) \times (\text{item} \times \text{storage}) \times \text{Week}$ |
-| Production Plan               | $P$  | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
-| Retained Inventory Plan       | $R$  | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
-| Dropped Item Plan (shortages) | $D$  | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
-| Overflow Item Plan (excess)   | $O$  | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
+| Expr | Description                   | Shape                                                |
+| ---- | ----------------------------- | ---------------------------------------------------- |
+| $T$  | Transportation Plan           | (`item` × `storage`) × (`item` × `storage`) × `Week` |
+| $P$  | Production Plan               | (`item` × `storage`) × `Week`                        |
+| $R$  | Retained Inventory Plan       | (`item` × `storage`) × `Week`                        |
+| $D$  | Dropped Item Plan (shortages) | (`item` × `storage`) × `Week`                        |
+| $O$  | Overflow Item Plan (excess)   | (`item` × `storage`) × `Week`                        |
 
 ---
 
 ### Parameters
 
-| Description                    | Name  | Shape                                                                                               |
-| ------------------------------ | ----- | --------------------------------------------------------------------------------------------------- |
-| Big-M penalty constant         | $M$   | Scalar                                                                                              |
-| Sales Plan                     | $S$   | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
-| Inventory Plan                 | $I$   | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
-| Transportation Cost            | $C_t$ | $(\text{item} \times \text{storage}) \times (\text{item} \times \text{storage}) \times \text{Week}$ |
-| Production Cost                | $C_p$ | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
-| Inventory Holding Cost         | $C_r$ | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
-| Transport Capacity Constraint  | $L_t$ | $(\text{item} \times \text{storage}) \times (\text{item} \times \text{storage}) \times \text{Week}$ |
-| Production Capacity Constraint | $L_p$ | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
-| Inventory Capacity Constraint  | $L_r$ | $(\text{item} \times \text{storage}) \times \text{Week}$                                            |
+| Expr  | Description                    | Shape                                                |
+| ----- | ------------------------------ | ---------------------------------------------------- |
+| $M$   | Big-M penalty constant         | Scalar                                               |
+| $S$   | Sales Plan                     | (`item` × `storage`) × `Week`                        |
+| $I$   | Inventory Plan                 | (`item` × `storage`) × `Week`                        |
+| $C_t$ | Transportation Cost            | (`item` × `storage`) × (`item` × `storage`) × `Week` |
+| $C_p$ | Production Cost                | (`item` × `storage`) × `Week`                        |
+| $C_r$ | Inventory Holding Cost         | (`item` × `storage`) × `Week`                        |
+| $L_t$ | Transport Capacity Constraint  | (`item` × `storage`) × (`item` × `storage`) × `Week` |
+| $L_p$ | Production Capacity Constraint | (`item` × `storage`) × `Week`                        |
+| $L_r$ | Inventory Capacity Constraint  | (`item` × `storage`) × `Week`                        |
