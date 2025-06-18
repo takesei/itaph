@@ -28,7 +28,7 @@ Where:
 
 | Expression                                                                            | Description                               |
 | ------------------------------------------------------------------------------------- | ----------------------------------------- |
-| $T^{[w]} (I^{[w]} + P^{[w]} + R^{[w-1]}) = I^{[w+1]} + R^{[w]} + (O^{[w]} - D^{[w]})$ | Flow balance for each $w \in \text{Week}$ |
+| $I^{[w]} + T^{[w]}(P^{[w]} + R^{[w-1]}) = I^{[w+1]} + R^{[w]} + (O^{[w]} - D^{[w]})$  | Flow balance for each $w \in \text{Week}$ |
 | $T \geq 0$                                                                            | Non-negativity of transport plan          |
 | $\text{Sum}(T, \text{axis} = [0, 1]) = 1$                                             | Total transport flow conservation         |
 | $T \leq L_t$                                                                          | Transport capacity limits                 |
